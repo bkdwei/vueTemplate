@@ -1,0 +1,79 @@
+<template>
+<div class="news">
+	<div class="tab">
+		<!-- tab栏 -->
+		<Scroller :lock-y="true">
+			<tab :style="{'width': tabWidth}"
+			  :line-width="3"
+			  :animate="false"
+			  :active-color="'#35495e'"
+			  :index="2">
+				<tab-item @on-item-click="go(item)"
+				  :selected="i===0"
+				  v-for="(item,i) in tabList"
+				  :key="i">{{item.title}}</tab-item>
+			</tab>
+		</Scroller>
+	</div>
+	<router-view></router-view>
+	<router-view name="newDetail"></router-view>
+</div>
+</template>
+
+<script>
+import {
+	Tab,
+	TabItem,
+	Scroller
+} from 'vux';
+
+export default {
+	data() {
+		return {
+			tabList: [ {
+					title: '首页',
+					path: 'index'
+				},
+				{
+					title: '商业',
+					path: 'shangYe'
+				},
+				{
+					title: '财经',
+					path: 'caijing'
+				},
+				{
+					title: '汽车',
+					path: 'cart'
+				},
+				{
+					title: '我的订阅',
+					path: 'myFeeds'
+				}
+			]
+		};
+	},
+	methods: {
+		go( item ) {
+			this.$router.push( `/news/${item.path}` );
+		}
+	},
+	computed: {
+		tabWidth() {
+			return this.tabList.length * 100 + 'px';
+		}
+	},
+	components: {
+		Tab,
+		TabItem,
+		Scroller
+	}
+};
+</script>
+
+<style lang="less">
+.news {
+    height: 100%;
+    position: relative;
+}
+</style>
